@@ -1,12 +1,13 @@
 // Initialize variables
 const cardContainer = document.querySelector('.cards-container');
 const overlay = document.querySelector('.overlay');
-const url = 'https://randomuser.me/api/?results=11&nat=us';
+const url = 'https://randomuser.me/api/?results=12&nat=us';
 
 // Create a card for each employee
-function createCard(name, email, address, img){
+function createCard(index, name, email, address, img){
   const card = document.createElement('DIV');
   card.classList.add('card');
+  card.classList.add(`card-${index}`);
 
   const imgDiv = document.createElement('DIV');
   imgDiv.classList.add('card-img');
@@ -41,9 +42,10 @@ function createCard(name, email, address, img){
 }
 
 // Create an overlay for each employee
-function createOverlay(name, email, address, img, dob, phone){
+function createOverlay(index, name, email, address, img, dob, phone){
   const card = document.createElement('DIV');
   card.classList.add('card');
+  card.classList.add(`card-${index}`);
 
   const imgDiv = document.createElement('DIV');
   imgDiv.classList.add('card-img');
@@ -99,7 +101,7 @@ function createOverlay(name, email, address, img, dob, phone){
   card.appendChild(cardContent);
   card.appendChild(cardDetails);
 
-  overlay.appendChild(card);
+  return card;
 
 }
 
@@ -119,6 +121,7 @@ xhr.onreadystatechange = function(){
       const results = JSON.parse(xhr.responseText);
       // Loop through the results and create a card for each employee
       for (var i = 0; i < results.results.length; i++) {
+        var index = i + 1;
         var userName = {
           first: results.results[i].name.first,
           last: results.results[i].name.last
@@ -133,16 +136,58 @@ xhr.onreadystatechange = function(){
         var userImg = results.results[i].picture.large;
         // need to convert this result to display MM/DD/YY
         var userBday = results.results[i].dob.date;
+          var year = userBday.substring(0, 4);
+          var month = userBday.substring(5, 7);
+          var day = userBday.substring(8, 10);
+          userBday = `${month}/${day}/${year}`;
         //  may need to convert / format phone number
         var userPhone = results.results[i].phone;
 
         // Create the card
-        createCard(userName, userEmail, userAddress, userImg);
-
+        createCard(index, userName, userEmail, userAddress, userImg);
       }
 
-    }
-  }
+      // ==================
+      // EVENT LISTENERS
+      // ==================
+
+        // Listen on the PARENT
+      const cardsContainer = document.querySelector('.cards-container');
+
+      cardsContainer.addEventListener('click', function(evt){
+          // Get the list of employee cards
+          // Determine which card was clicked on (.card-#)
+          const employees = document.querySelectorAll('.card');
+          console.log(employees);
+
+
+
+          // Loop through the employees & check for a match
+          console.log(results);
+
+
+
+          // Match the overlay for that element using the card-# class
+          // IF IT MATCHES ... Show the overlay for that employees's card
+          var element = createOverlay(index, userName, userEmail, userAddress, userImg, userBday, userPhone);
+          overlay.appendChild(element);
+          overlay.style.display = 'block';
+
+
+          // Close the Modal
+          const closeModal = document.querySelector('.close-modal');
+
+          closeModal.addEventListener('click', function(){
+            // Hide the overlay
+            overlay.style.display = 'none';
+            overlay.removeChild(element);
+          });
+
+      });
+
+
+    } // end status === 200
+  } // end readyState
 };
 
 // 3. Open the request
@@ -150,31 +195,3 @@ xhr.open('GET', url);
 
 // 4. Send the request
 xhr.send();
-
-
-// ==================
-// EVENT LISTENERS
-// ==================
-
-cardContainer.addEventListener('click', function(){
-  // Get the list of cards
-  const cards = document.querySelectorAll('.cards-container .card');
-  console.log(cards);
-  // Determine which card was clicked on
-  // Listen on the PARENT
-
-
-  // Create the overlay for that element
-
-
-  // Show the overlay
-  overlay.style.display = 'block';
-});
-
-const closeModal = document.querySelector('.close-modal');
-closeModal.addEventListener('click', function(){
-
-  // Hide the overlay
-  overlay.style.display = 'none';
-
-});
