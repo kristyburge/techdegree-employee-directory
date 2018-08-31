@@ -37,7 +37,7 @@ small, .font_small {font-size: 0.8em;}
 
 .container {
   background: #fafafa;
-  max-width: 1024px;
+  /* max-width: 1120px; */
   margin: 0 auto;
   padding: 1.5em;
 }
@@ -62,7 +62,8 @@ small, .font_small {font-size: 0.8em;}
   flex-wrap: wrap;
   transition: box-shadow 0.3s ease-out;
   cursor: pointer;
-  width: 275px;
+  /* width: 300px; */
+  flex: 1 1 290px;
 }
 
 .card:hover {
@@ -105,10 +106,35 @@ small, .font_small {font-size: 0.8em;}
   background: rgba(0,0,0,0.5);
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: none; /* hide on page load */
+  left: 100%; /* hide on page load */
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  transition: left 0.4s ease-in-out;
+}
+
+.prev {
+  background: transparent;
+  color: #fff;
+  position: absolute;
+  top: 45%;
+  left: 23%;
+  font-weight: 700;
+  text-transform: lowercase;
+  font-size: 1em;
+  cursor: pointer;
+}
+
+.next {
+  background: transparent;
+  color: #fff;
+  position: absolute;
+  top: 45%;
+  left: 75%;
+  font-weight: 700;
+  text-transform: lowercase;
+  font-size: 1em;
+  cursor: pointer;
 }
 
 .overlay .card {
@@ -158,6 +184,10 @@ small, .font_small {font-size: 0.8em;}
     padding: 3em;
   }
 
+  .card {
+    flex-wrap: nowrap;
+  }
+
   .overlay .card {
     width: 50%;
   }
@@ -169,7 +199,4 @@ small, .font_small {font-size: 0.8em;}
     width: 33%;
   }
 
-  .card {
-    width: 280px;
-  }
 }

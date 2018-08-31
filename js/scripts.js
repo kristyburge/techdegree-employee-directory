@@ -106,6 +106,60 @@ function createOverlay(index, name, email, address, img, dob, phone){
 }
 
 
+function getPreviousCard(){
+    // Get the card with class .selected
+    var startCard = $('.overlay .card').filter('.selected');
+    var getCardNum = startCard.attr('class');
+    var start = getCardNum.substring(10, 12);
+    // Convert to a number
+    start = parseInt(start);
+
+    // Check the value of start
+    if (start !== 1) {
+      var prev = start - 1;
+    } else if (start === 1){
+      prev = 12;
+    }
+
+    overlay.style.left = 0;
+    var currentCard = document.querySelector('.overlay .card-' + start);
+    var prevCard = document.querySelector('.overlay .card-' + prev);
+    // remove from original card
+    currentCard.style.display = 'none';
+    currentCard.classList.remove('selected');
+    // display the previous card
+    prevCard.style.display = 'flex';
+    prevCard.classList.add('selected');
+}
+
+function getNextCard(){
+  // Get the card with class .selected
+  var startCard = $('.overlay .card').filter('.selected');
+  var getCardNum = startCard.attr('class');
+  var start = getCardNum.substring(10, 12);
+  // Convert to a number
+  start = parseInt(start);
+
+  // Check the value of start
+  if (start !== 12) {
+    var next = start + 1;
+  } else if (start === 12){
+    next = 1;
+  }
+
+  overlay.style.left = 0;
+  var currentCard = document.querySelector('.overlay .card-' + start);
+  var nextCard = document.querySelector('.overlay .card-' + next);
+
+  // remove from original card
+  currentCard.style.display = 'none';
+  currentCard.classList.remove('selected');
+  // display the previous card
+  nextCard.style.display = 'flex';
+  nextCard.classList.add('selected');
+}
+
+
 // ===============================
 // Connect to the Random User API
 // ===============================
@@ -157,32 +211,62 @@ xhr.onreadystatechange = function(){
         // Listen on the PARENT
       const cardsContainer = document.querySelector('.cards-container');
       const employees = document.querySelectorAll('[id^="card"]');
+      const prevBtn = document.querySelector('.prev');
+      const nextBtn = document.querySelector('.next');
 
       $('.cards-container .card').on('click', function(){
 
         // Get the value of the employee #card-X
         var cardID = $(this).attr('id');
         var employeeNumber = cardID.slice(5,7);
-        console.log('Employee Number: ' + employeeNumber);
+        // console.log('Employee Number: ' + employeeNumber);
 
           // Display the overlay & card that matches the employee number
-              overlay.style.display = 'flex';
+              // overlay.style.display = 'flex';
+              overlay.style.left = 0;
               const cardToShow = document.querySelector('.overlay .card-' + employeeNumber);
               cardToShow.style.display = 'flex';
+              cardToShow.classList.add('selected');
+
+          $('.prev').on('click', getPreviousCard);
+
+          // OR - listen for a left arrow key press
+          $(document).keydown(function(e) {
+            if (e.which === 37) {
+              getPreviousCard();
+            }
+          });
+
+          $('.next').on('click', getNextCard);
+
+          // OR - listen for a right arrow key press
+          $(document).keydown(function(e) {
+            if (e.which === 39) {
+              getNextCard();
+            }
+          });
+
 
           // Close the Modal if user clicks the X
           $('.close-modal').on('click', function(){
             // Hide the overlay & card
-            overlay.style.display = 'none';
-            cardToShow.style.display = 'none';
+            // overlay.style.display = 'none';
+            overlay.style.left = '100%';
+            $('.overlay .card').css('display', 'none');
+            $('.overlay .card').removeClass('selected');
+            // cardToShow.style.display = 'none';
+            // cardToShow.classList.remove('selected');
           });
 
           // OR - listen for a keydown event and close the modal when ESC key is pressed
           $(document).keydown(function(e) {
             if (e.which === 27) {
               // Hide the overlay & card
-              overlay.style.display = 'none';
-              cardToShow.style.display = 'none';
+              overlay.style.left = '100%';
+              $('.overlay .card').css('display', 'none');
+              $('.overlay .card').removeClass('selected');
+              // cardToShow.style.display = 'none';
+              // cardToShow.classList.remove('selected');
             }
           });
 
