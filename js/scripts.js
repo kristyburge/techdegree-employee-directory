@@ -7,7 +7,7 @@ const url = 'https://randomuser.me/api/?results=12&nat=us';
 function createCard(index, name, email, address, img){
   const card = document.createElement('DIV');
   card.classList.add('card');
-  card.classList.add(`card-${index}`);
+  card.setAttribute('id', `card-${index}`);
 
   const imgDiv = document.createElement('DIV');
   imgDiv.classList.add('card-img');
@@ -101,7 +101,7 @@ function createOverlay(index, name, email, address, img, dob, phone){
   card.appendChild(cardContent);
   card.appendChild(cardDetails);
 
-  return card;
+  overlay.appendChild(card);
 
 }
 
@@ -145,6 +145,9 @@ xhr.onreadystatechange = function(){
 
         // Create the card
         createCard(index, userName, userEmail, userAddress, userImg);
+
+        // Create overlay
+        createOverlay(index, userName, userEmail, userAddress, userImg, userBday, userPhone);
       }
 
       // ==================
@@ -153,34 +156,34 @@ xhr.onreadystatechange = function(){
 
         // Listen on the PARENT
       const cardsContainer = document.querySelector('.cards-container');
+      const employees = document.querySelectorAll('[id^="card"]');
 
-      cardsContainer.addEventListener('click', function(evt){
-          // Get the list of employee cards
-          // Determine which card was clicked on (.card-#)
-          const employees = document.querySelectorAll('.card');
-          console.log(employees);
+      $('.cards-container .card').on('click', function(){
 
+        // Get the value of the employee #card-X
+        var cardID = $(this).attr('id');
+        var employeeNumber = cardID.slice(5,7);
+        console.log('Employee Number: ' + employeeNumber);
 
+          // Display the overlay & card that matches the employee number
+              overlay.style.display = 'flex';
+              const cardToShow = document.querySelector('.overlay .card-' + employeeNumber);
+              cardToShow.style.display = 'flex';
 
-          // Loop through the employees & check for a match
-          console.log(results);
-
-
-
-          // Match the overlay for that element using the card-# class
-          // IF IT MATCHES ... Show the overlay for that employees's card
-          var element = createOverlay(index, userName, userEmail, userAddress, userImg, userBday, userPhone);
-          overlay.appendChild(element);
-          overlay.style.display = 'block';
-
-
-          // Close the Modal
-          const closeModal = document.querySelector('.close-modal');
-
-          closeModal.addEventListener('click', function(){
-            // Hide the overlay
+          // Close the Modal if user clicks the X
+          $('.close-modal').on('click', function(){
+            // Hide the overlay & card
             overlay.style.display = 'none';
-            overlay.removeChild(element);
+            cardToShow.style.display = 'none';
+          });
+
+          // OR - listen for a keydown event and close the modal when ESC key is pressed
+          $(document).keydown(function(e) {
+            if (e.which === 27) {
+              // Hide the overlay & card
+              overlay.style.display = 'none';
+              cardToShow.style.display = 'none';
+            }
           });
 
       });

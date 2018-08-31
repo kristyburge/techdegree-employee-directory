@@ -37,10 +37,13 @@ small, .font_small {font-size: 0.8em;}
 
 .container {
   background: #fafafa;
-  /* max-width: 1024px; */
+  max-width: 1024px;
   margin: 0 auto;
-  padding: 3em;
-  /* overflow: hidden; */
+  padding: 1.5em;
+}
+
+.container h1 {
+  margin-left: 0.5em;
 }
 
 .cards-container {
@@ -59,7 +62,7 @@ small, .font_small {font-size: 0.8em;}
   flex-wrap: wrap;
   transition: box-shadow 0.3s ease-out;
   cursor: pointer;
-  max-width: 360px;
+  width: 275px;
 }
 
 .card:hover {
@@ -100,21 +103,23 @@ small, .font_small {font-size: 0.8em;}
 
 .overlay {
   background: rgba(0,0,0,0.5);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: none; /* hide on page load */
 }
 
 .overlay .card {
   flex-direction: column;
   width: 80%;
+  height: 70%;
   margin: 0 auto;
   position: relative;
   top: 10%;
   text-align: center;
+  display: none; /* hide on page load */
 }
 
 .overlay .card-img img {
@@ -126,6 +131,13 @@ small, .font_small {font-size: 0.8em;}
 .overlay .card-details {
   align-items: center;
 }
+/*
+.overlay .card + .card {
+    transform: translateX(100vw);
+    position: absolute;
+    top: 10%;
+    left: 50%;
+} */
 
 .close-modal {
   position: absolute;
@@ -142,13 +154,22 @@ small, .font_small {font-size: 0.8em;}
 }
 
 @media screen and (min-width: 768px) {
+  .container {
+    padding: 3em;
+  }
+
   .overlay .card {
     width: 50%;
   }
+
 }
 
 @media screen and (min-width: 1024px) {
   .overlay .card {
     width: 33%;
+  }
+
+  .card {
+    width: 280px;
   }
 }
