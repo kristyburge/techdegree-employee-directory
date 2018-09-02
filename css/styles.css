@@ -23,7 +23,7 @@ h1 {
   margin-top: 0;
   font-size: 1.563em;
   text-transform: uppercase;
-  color: navy;
+  color: #23238E;
   letter-spacing: 2px;
 }
 
@@ -34,6 +34,20 @@ h3 {font-size: 1.563em;}
 h4 {font-size: 1.25em;}
 
 small, .font_small {font-size: 0.8em;}
+
+#search {
+  padding: 15px;
+  border-radius: 5px;
+  outline: none;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  font-size: 1.125em;
+  border: 2px solid #ccc;
+}
+
+#search:focus {
+  border: 2px solid #FFEB3B;
+}
 
 .container {
   background: #fafafa;
@@ -103,7 +117,7 @@ small, .font_small {font-size: 0.8em;}
 }
 
 .overlay {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.7);
   position: fixed;
   top: 0;
   left: 100%; /* hide on page load */
@@ -114,27 +128,48 @@ small, .font_small {font-size: 0.8em;}
 }
 
 .prev {
-  background: transparent;
+  background: rgba(0,0,0,0.9);
   color: #fff;
   position: absolute;
   top: 45%;
-  left: 23%;
+  left: 5%;
   font-weight: 700;
   text-transform: lowercase;
   font-size: 1em;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .next {
-  background: transparent;
+  background: rgba(0,0,0,0.9);
   color: #fff;
   position: absolute;
   top: 45%;
-  left: 75%;
+  left: 85%;
   font-weight: 700;
   text-transform: lowercase;
-  font-size: 1em;
+  font-size: 1.1em;
   cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.prev:hover,
+.next:hover {
+  color: #FFEB3B;
+}
+
+.prev:hover {
+  transform: translateX(-5px);
+}
+
+.next:hover {
+  transform: translateX(5px);
 }
 
 .overlay .card {
@@ -192,11 +227,24 @@ small, .font_small {font-size: 0.8em;}
     width: 50%;
   }
 
+  .prev {
+    left: 16%;
+  }
+  .next {
+    left: 80%;
+  }
+
 }
 
 @media screen and (min-width: 1024px) {
   .overlay .card {
     width: 33%;
+  }
+  .prev {
+    left: 23%;
+  }
+  .next {
+    left: 75%;
   }
 
 }

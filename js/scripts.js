@@ -108,22 +108,23 @@ function createOverlay(index, name, email, address, img, dob, phone){
 
 function getPreviousCard(){
     // Get the card with class .selected
-    var startCard = $('.overlay .card').filter('.selected');
-    var getCardNum = startCard.attr('class');
-    var start = getCardNum.substring(10, 12);
+    const startCard = $('.overlay .card').filter('.selected');
+    const getCardNum = startCard.attr('class');
+    let start = getCardNum.substring(10, 12);
     // Convert to a number
     start = parseInt(start);
+    let prev;
 
     // Check the value of start
     if (start !== 1) {
-      var prev = start - 1;
+      prev = start - 1;
     } else if (start === 1){
       prev = 12;
     }
 
     overlay.style.left = 0;
-    var currentCard = document.querySelector('.overlay .card-' + start);
-    var prevCard = document.querySelector('.overlay .card-' + prev);
+    let currentCard = document.querySelector('.overlay .card-' + start);
+    let prevCard = document.querySelector('.overlay .card-' + prev);
     // remove from original card
     currentCard.style.display = 'none';
     currentCard.classList.remove('selected');
@@ -134,22 +135,23 @@ function getPreviousCard(){
 
 function getNextCard(){
   // Get the card with class .selected
-  var startCard = $('.overlay .card').filter('.selected');
-  var getCardNum = startCard.attr('class');
-  var start = getCardNum.substring(10, 12);
+  const startCard = $('.overlay .card').filter('.selected');
+  const getCardNum = startCard.attr('class');
+  let start = getCardNum.substring(10, 12);
   // Convert to a number
   start = parseInt(start);
+  let next;
 
   // Check the value of start
   if (start !== 12) {
-    var next = start + 1;
+    next = start + 1;
   } else if (start === 12){
     next = 1;
   }
 
   overlay.style.left = 0;
-  var currentCard = document.querySelector('.overlay .card-' + start);
-  var nextCard = document.querySelector('.overlay .card-' + next);
+  let currentCard = document.querySelector('.overlay .card-' + start);
+  let nextCard = document.querySelector('.overlay .card-' + next);
 
   // remove from original card
   currentCard.style.display = 'none';
@@ -208,12 +210,7 @@ xhr.onreadystatechange = function(){
       // EVENT LISTENERS
       // ==================
 
-        // Listen on the PARENT
-      const cardsContainer = document.querySelector('.cards-container');
-      const employees = document.querySelectorAll('[id^="card"]');
-      const prevBtn = document.querySelector('.prev');
-      const nextBtn = document.querySelector('.next');
-
+      // Listen on the PARENT
       $('.cards-container .card').on('click', function(){
 
         // Get the value of the employee #card-X
