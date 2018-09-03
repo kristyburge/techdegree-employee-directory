@@ -196,8 +196,8 @@ xhr.onreadystatechange = function(){
           var month = userBday.substring(5, 7);
           var day = userBday.substring(8, 10);
           userBday = `${month}/${day}/${year}`;
-        //  may need to convert / format phone number
-        var userPhone = results.results[i].phone;
+          
+        var userPhone = results.results[i].cell;
 
         // Create the card
         createCard(index, userName, userEmail, userAddress, userImg);
