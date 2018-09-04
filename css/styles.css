@@ -76,7 +76,7 @@ small, .font_small {font-size: 0.8em;}
   flex-wrap: nowrap;
   transition: box-shadow 0.3s ease-out;
   cursor: pointer;
-  width: 31%;
+  max-width: 100%;
   flex: 1 1 290px;
 }
 
@@ -222,6 +222,7 @@ small, .font_small {font-size: 0.8em;}
 
   .card {
     flex-wrap: nowrap;
+    max-width: 48%;
   }
 
   .card-img img {
@@ -242,9 +243,13 @@ small, .font_small {font-size: 0.8em;}
 }
 
 @media screen and (min-width: 1024px) {
+  .card {
+    max-width: 31%;
+  }
   .overlay .card {
     width: 33%;
   }
+
   .card-img img {
     width: 72px;
     height: 72px;
